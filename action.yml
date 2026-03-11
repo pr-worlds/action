@@ -1,0 +1,38 @@
+name: 'PR Worlds'
+description: 'Deterministic preview data worlds for every Pull Request. Works with any PostgreSQL.'
+author: 'PR Worlds'
+
+branding:
+  icon: 'globe'
+  color: 'green'
+
+inputs:
+  database_url:
+    description: 'PostgreSQL connection string'
+    required: true
+  api_key:
+    description: 'PR Worlds API key for Pro/Team limits (optional, free tier without key)'
+    required: false
+    default: ''
+  config_path:
+    description: 'Path to prworlds.json or pdc.json (auto-detected if omitted)'
+    required: false
+    default: ''
+  github-token:
+    description: 'GitHub token for posting PR comments'
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  schema:
+    description: 'PostgreSQL schema name created for this PR'
+  fingerprint:
+    description: 'Deterministic dataset fingerprint (schema hash)'
+  rows:
+    description: 'Total rows generated'
+  tables:
+    description: 'Number of tables seeded'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.mjs'
