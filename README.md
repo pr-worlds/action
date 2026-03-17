@@ -19,16 +19,17 @@ on:
   pull_request:
     types: [opened, reopened, synchronize, closed]
 
+permissions:
+  pull-requests: write
+
 jobs:
   world:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: prworlds/action@v1
+      - uses: pr-worlds/action@v1
         with:
           database_url: ${{ secrets.DATABASE_URL }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 **2. Add your `DATABASE_URL`** as a GitHub Secret (Settings → Secrets → Actions).
@@ -107,8 +108,8 @@ Config is optional — PR Worlds works with zero configuration by introspecting 
 | Input | Required | Description |
 |---|---|---|
 | `database_url` | Yes | PostgreSQL connection string |
+| `api_key` | No | PR Worlds API key (unlock Pro/Team limits) |
 | `config_path` | No | Path to prworlds.json (auto-detected) |
-| `scenario` | No | Override scenario |
 | `github-token` | No | GitHub token (auto-provided) |
 
 ## Action Outputs
